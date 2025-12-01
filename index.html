@@ -216,7 +216,48 @@
             line-height: 1.6;
         }
 
-        /* Carrossel de fotos */
+        /* Player de Música */
+        .music-section {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .music-player-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--light);
+            margin-bottom: 20px;
+        }
+
+        .audio-player {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .music-note {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        /* Carrossel de fotos - DISPOSIÇÃO ESPECÍFICA */
         .carousel-section {
             padding: 40px 20px;
             max-width: 1200px;
@@ -257,16 +298,22 @@
             border-radius: 25px;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            background: #000;
         }
 
+        /* DISPOSIÇÃO ESPECÍFICA DAS IMAGENS - Como no primeiro código */
         .carousel-slide {
             position: absolute;
-            width: 100%;
+            width: auto;
             height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
             cursor: pointer;
+            object-fit: contain;
         }
 
         .carousel-slide.active {
@@ -432,44 +479,6 @@
             font-size: 0.9rem;
         }
 
-        /* Seção de música */
-        .music-section {
-            padding: 40px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .music-player {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid var(--secondary);
-        }
-
-        .music-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--light);
-            margin-bottom: 20px;
-        }
-
-        .music-video {
-            width: 100%;
-            max-width: 560px;
-            height: 315px;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 0 auto 20px;
-            border: 3px solid var(--accent);
-        }
-
-        .music-note {
-            color: var(--gold);
-            font-size: 1.2rem;
-            font-style: italic;
-        }
-
         /* Mensagem curta */
         .short-message {
             padding: 40px 20px;
@@ -504,7 +513,7 @@
             margin-bottom: 30px;
         }
 
-        /* Calendário para Aparecida */
+        /* Calendário para Aparecida - COMO NO CÓDIGO ORIGINAL */
         .calendar-section {
             padding: 40px 20px;
             max-width: 600px;
@@ -573,6 +582,28 @@
             cursor: not-allowed;
         }
 
+        /* Botão Aparecida */
+        .aparecida-btn {
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+        }
+
+        .aparecida-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(230, 57, 70, 0.4);
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -587,6 +618,10 @@
             color: var(--gold);
             margin: 20px 0;
             font-size: 1.1rem;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .heart-beat {
@@ -616,7 +651,7 @@
             }
             
             .carousel-container {
-                height: 350px;
+                height: 400px;
             }
             
             .poem-content {
@@ -626,16 +661,26 @@
             .carousel-title, .poem-title {
                 font-size: 1.8rem;
             }
+            
+            .carousel-title::before,
+            .carousel-title::after {
+                display: none;
+            }
+            
+            .calendar-day {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
         }
 
-        /* Fullscreen para imagens */
+        /* Fullscreen para imagens - DISPOSIÇÃO ESPECÍFICA */
         .fullscreen-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.98);
             display: none;
             justify-content: center;
             align-items: center;
@@ -646,8 +691,9 @@
         .fullscreen-image {
             max-width: 90%;
             max-height: 90%;
-            border-radius: 15px;
-            box-shadow: 0 0 100px rgba(255, 0, 110, 0.3);
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(255, 0, 110, 0.5);
         }
     </style>
 </head>
@@ -662,7 +708,7 @@
             <p class="password-subtitle">Esta mensagem foi feita especialmente para você, com todo o meu coração</p>
             
             <div class="password-input-container">
-                <input type="password" id="passwordInput" class="password-input" placeholder="Digite a senha especial...">
+                <input type="password" id="passwordInput" class="password-input" placeholder="Digite a senha especial..." autofocus>
             </div>
             
             <button onclick="checkPassword()" class="password-btn">
@@ -676,11 +722,6 @@
         </div>
     </div>
 
-    <!-- Áudio -->
-    <audio id="backgroundMusic" loop>
-        <source src="https://www.youtube.com/embed/RiQmdpW56RE?autoplay=1&mute=0" type="audio/mpeg">
-    </audio>
-
     <!-- Conteúdo Principal -->
     <div class="main-content" id="mainContent">
         <!-- Cabeçalho -->
@@ -689,7 +730,24 @@
             <p class="subtitle">Tudo será diferente. Cada detalhe, cada gesto, cada olhar. Porque eu mudei. Porque aprendi a amar da forma que você merece.</p>
         </div>
 
-        <!-- Carrossel de Fotos -->
+        <!-- Player de Música -->
+        <div class="music-section">
+            <div class="music-player-container">
+                <h3 class="music-title">Distante - Jorge Vercillo</h3>
+                <audio id="backgroundMusic" controls class="audio-player" autoplay loop>
+                    <!-- Arquivo local no GitHub -->
+                    <source src="Distante (Estudio).mp3" type="audio/mpeg">
+                    
+                    <!-- Alternativa caso o primeiro não funcione -->
+                    <source src="distante-jorge-vercillo.mp3" type="audio/mpeg">
+                    
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+                <p class="music-note">"Distante de você, mas perto no coração... Essa música sempre me fez pensar em nós."</p>
+            </div>
+        </div>
+
+        <!-- Carrossel de Fotos - COM DISPOSIÇÃO ESPECÍFICA -->
         <div class="carousel-section">
             <h2 class="carousel-title">Nossas Memórias</h2>
             <div class="carousel-container">
@@ -709,41 +767,8 @@
         <!-- Carrossel de Poemas -->
         <div class="poem-carousel-section">
             <div class="poem-carousel">
-                <!-- Poema 1 -->
+                <!-- Poema 1 - 11 Meses e 26 Dias -->
                 <div class="poem-slide active">
-                    <h3 class="poem-title">Se Você Voltar...</h3>
-                    <div class="poem-content">
-Se você voltar, saiba que cada dia sem você
-foi uma lição de humildade, um aprendizado sobre amor.
-
-Se você voltar, encontrará um homem transformado,
-que trocou a pressa pela paciência,
-o orgulho pela oração, o desespero pela fé.
-
-Se você voltar, nossas mãos se encontrarão
-não mais pelo acaso, mas pela vontade de Deus.
-Nossos passos se alinharão não pela paixão cega,
-mas pela luz que vem do céu.
-
-Se você voltar, será sob a benção de Nossa Senhora,
-no santuário onde tudo começou a fazer sentido.
-Será com a consagração que nos une,
-mesmo quando tudo parecia perdido.
-
-Se você voltar... ah, se você voltar...
-Cada manhã será um milagre,
-cada olhar uma oração,
-cada toque um sacramento.
-
-Mas se não voltar, guardarei em mim
-a gratidão por ter te conhecido,
-por ter amado, por ter sido amado,
-por ter aprendido contigo o que é amar de verdade.
-                    </div>
-                </div>
-                
-                <!-- Poema 2 -->
-                <div class="poem-slide">
                     <h3 class="poem-title">11 Meses e 26 Dias</h3>
                     <div class="poem-content">
 Onze meses e vinte e seis dias...
@@ -784,21 +809,43 @@ mesmo que ela floresça em outros braços.
                     </div>
                 </div>
                 
+                <!-- Poema 2 - Se Você Voltar... -->
+                <div class="poem-slide">
+                    <h3 class="poem-title">Se Você Voltar...</h3>
+                    <div class="poem-content">
+Se você voltar, saiba que cada dia sem você
+foi uma lição de humildade, um aprendizado sobre amor.
+
+Se você voltar, encontrará um homem transformado,
+que trocou a pressa pela paciência,
+o orgulho pela oração, o desespero pela fé.
+
+Se você voltar, nossas mãos se encontrarão
+não mais pelo acaso, mas pela vontade de Deus.
+Nossos passos se alinharão não pela paixão cega,
+mas pela luz que vem do céu.
+
+Se você voltar, será sob a benção de Nossa Senhora,
+no santuário onde tudo começou a fazer sentido.
+Será com a consagração que nos une,
+mesmo quando tudo parecia perdido.
+
+Se você voltar... ah, se você voltar...
+Cada manhã será um milagre,
+cada olhar uma oração,
+cada toque um sacramento.
+
+Mas se não voltar, guardarei em mim
+a gratidão por ter te conhecido,
+por ter amado, por ter sido amado,
+por ter aprendido contigo o que é amar de verdade.
+                    </div>
+                </div>
+                
                 <button class="poem-nav prev" onclick="prevPoem()">‹</button>
                 <button class="poem-nav next" onclick="nextPoem()">›</button>
             </div>
             <div class="poem-indicator" id="poemIndicator">Poema 1 de 2</div>
-        </div>
-
-        <!-- Música -->
-        <div class="music-section">
-            <div class="music-player">
-                <h3 class="music-title">Sensível Demais - Jorge Vercillo</h3>
-                <div class="music-video">
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/RiQmdpW56RE?autoplay=1&mute=0&controls=1&modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <p class="music-note">A música que sempre me lembra você... porque você é sensível demais, linda demais, especial demais.</p>
-            </div>
         </div>
 
         <!-- Mensagem Curta -->
@@ -808,7 +855,7 @@ mesmo que ela floresça em outros braços.
                     Isa, se você está lendo isso, saiba que não é para pressionar, não é para cobrar, não é para fazer você se sentir culpada. É apenas para dizer que eu mudei, que eu cresci, que eu aprendi. E que se um dia você sentir no coração que podemos conversar, eu estarei aqui, com respeito, com fé, com o coração aberto. Porque o que sinto por você é real, é profundo, e merece pelo menos uma conversa honesta.
                 </div>
                 
-                <button class="password-btn" onclick="showCalendar()">
+                <button class="aparecida-btn" onclick="showCalendar()">
                     <i class="fas fa-church"></i> Sugerir Encontro em Aparecida
                 </button>
                 
@@ -818,7 +865,7 @@ mesmo que ela floresça em outros braços.
             </div>
         </div>
 
-        <!-- Calendário -->
+        <!-- Calendário - COMO NO CÓDIGO ORIGINAL -->
         <div class="calendar-section" id="calendarSection">
             <div class="calendar-container">
                 <h3 class="calendar-title">Escolha uma data para nos encontrarmos</h3>
@@ -847,7 +894,7 @@ mesmo que ela floresça em outros braços.
     <script>
         // Configurações
         const CORRECT_PASSWORD = "vitória";
-        const EMAIL_TO = "phillipelimapravatti@gmail.com";
+        const EMAIL_TO = "phillipelimaptavatti@gmail.com";
         let selectedDate = null;
         
         // Elementos principais
@@ -855,6 +902,7 @@ mesmo que ela floresça em outros braços.
         const mainContent = document.getElementById('mainContent');
         const flowersContainer = document.getElementById('flowersContainer');
         const passwordInput = document.getElementById('passwordInput');
+        const confirmBtn = document.getElementById('confirmDate');
         
         // Criar flores caindo
         function createFlowers() {
@@ -926,11 +974,8 @@ mesmo que ela floresça em outros braços.
                     setTimeout(() => {
                         mainContent.style.opacity = '1';
                         startCarousels();
-                        createCalendar();
+                        startMusic();
                     }, 100);
-                    
-                    // Iniciar música
-                    playMusic();
                 }, 1500);
             } else {
                 // Efeito de erro
@@ -941,6 +986,7 @@ mesmo que ela floresça em outros braços.
                 setTimeout(() => {
                     passwordInput.style.borderColor = 'var(--secondary)';
                     passwordInput.style.animation = '';
+                    passwordInput.focus();
                 }, 500);
                 
                 alert('Senha incorreta. Tente novamente com carinho.');
@@ -1020,13 +1066,241 @@ mesmo que ela floresça em outros braços.
             updatePoemCarousel();
         }
         
+        // Música
+        function startMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            audio.volume = 0.3;
+            
+            // Tentar tocar
+            setTimeout(() => {
+                audio.play().catch(e => {
+                    console.log("Autoplay bloqueado");
+                    // Adicionar listener para primeiro clique
+                    document.addEventListener('click', function playOnce() {
+                        audio.play();
+                        document.removeEventListener('click', playOnce);
+                    });
+                });
+            }, 1000);
+        }
+        
+        // Calendário - FUNCIONANDO
+        function createCalendar() {
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+            
+            // Dias da semana
+            const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            daysOfWeek.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.style.fontWeight = 'bold';
+                dayElement.textContent = day;
+                calendar.appendChild(dayElement);
+            });
+            
+            // Data atual
+            const today = new Date();
+            
+            // Primeiro dia do mês atual
+            const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+            const firstDayIndex = firstDay.getDay(); // 0 = Domingo, 1 = Segunda, etc.
+            
+            // Último dia do mês atual
+            const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            
+            // Adicionar dias vazios no início do calendário
+            for (let i = 0; i < firstDayIndex; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day';
+                emptyDay.style.visibility = 'hidden';
+                calendar.appendChild(emptyDay);
+            }
+            
+            // Adicionar dias do mês atual
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                // Criar data completa
+                const currentDate = new Date(today.getFullYear(), today.getMonth(), day);
+                const dateString = currentDate.toISOString().split('T')[0];
+                dayElement.dataset.date = dateString;
+                
+                // Formatar data para tooltip
+                const formattedDate = currentDate.toLocaleDateString('pt-BR', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                dayElement.title = formattedDate;
+                
+                // Verificar se é uma data passada
+                if (currentDate < today) {
+                    dayElement.style.opacity = '0.5';
+                    dayElement.style.cursor = 'not-allowed';
+                    dayElement.title = 'Data já passada - ' + formattedDate;
+                } else {
+                    // Permitir clique apenas em datas futuras
+                    dayElement.onclick = () => selectDate(dayElement);
+                }
+                
+                calendar.appendChild(dayElement);
+            }
+        }
+        
+        function selectDate(element) {
+            // Remover seleção anterior
+            document.querySelectorAll('.calendar-day.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Selecionar nova data
+            element.classList.add('selected');
+            selectedDate = element.dataset.date;
+            
+            // Habilitar botão de confirmação
+            confirmBtn.disabled = false;
+            
+            // Formatar data para exibição
+            const date = new Date(selectedDate);
+            const formattedDate = date.toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            confirmBtn.innerHTML = `<i class="fas fa-calendar-check"></i> Confirmar: ${formattedDate}`;
+        }
+        
+        function showCalendar() {
+            // Criar calendário
+            createCalendar();
+            
+            // Mostrar seção do calendário
+            const calendarSection = document.getElementById('calendarSection');
+            calendarSection.style.display = 'block';
+            
+            // Rolar suavemente até o calendário
+            calendarSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+        
+        // Função para enviar email usando EmailJS
+        function sendEmail() {
+            if (!selectedDate) return;
+            
+            const date = new Date(selectedDate);
+            const formattedDate = date.toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Preparar o email
+            const subject = encodeURIComponent(`📅 Isa marcou uma data: ${formattedDate}`);
+            const body = encodeURIComponent(`A Isa marcou para o dia: ${formattedDate}\n\nEla está esperando que você entre em contato para combinar os detalhes do encontro em Aparecida.`);
+            
+            // Usar FormSubmit para enviar o email
+            const form = document.createElement('form');
+            form.style.display = 'none';
+            form.method = 'POST';
+            form.action = 'https://formsubmit.co/ajax/phillipelimaptavatti@gmail.com';
+            
+            // Adicionar campos ao formulário
+            const subjectField = document.createElement('input');
+            subjectField.type = 'hidden';
+            subjectField.name = '_subject';
+            subjectField.value = `📅 Isa marcou uma data: ${formattedDate}`;
+            
+            const messageField = document.createElement('input');
+            messageField.type = 'hidden';
+            messageField.name = 'message';
+            messageField.value = `A Isa marcou para o dia: ${formattedDate}\n\nEla está esperando que você entre em contato para combinar os detalhes do encontro em Aparecida.`;
+            
+            const captchaField = document.createElement('input');
+            captchaField.type = 'hidden';
+            captchaField.name = '_captcha';
+            captchaField.value = 'false';
+            
+            // Não redirecionar - ficar na mesma página
+            const nextField = document.createElement('input');
+            nextField.type = 'hidden';
+            nextField.name = '_next';
+            nextField.value = '#';
+            
+            form.appendChild(subjectField);
+            form.appendChild(messageField);
+            form.appendChild(captchaField);
+            form.appendChild(nextField);
+            
+            document.body.appendChild(form);
+            
+            // Enviar o formulário
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Email enviado com sucesso:', data);
+                
+                // Remover o formulário
+                form.remove();
+                
+                // Mensagem de confirmação para ela
+                alert(`Obrigado! A data ${formattedDate} foi enviada para mim. Entrarei em contato em breve para combinarmos nosso encontro em Aparecida. 🙏`);
+                
+                // Resetar seleção
+                resetCalendar();
+            })
+            .catch(error => {
+                console.error('Erro ao enviar email:', error);
+                
+                // Fallback: usar mailto link
+                const mailtoLink = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+                window.open(mailtoLink, '_blank');
+                
+                // Mensagem de confirmação
+                alert(`Data ${formattedDate} selecionada! Um email será enviado para organizarmos nosso encontro em Aparecida.`);
+                
+                // Resetar seleção
+                resetCalendar();
+                
+                form.remove();
+            });
+        }
+        
+        function resetCalendar() {
+            // Esconder calendário
+            document.getElementById('calendarSection').style.display = 'none';
+            
+            // Resetar seleção
+            selectedDate = null;
+            document.querySelectorAll('.calendar-day.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Desabilitar botão
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = 'Confirmar Data Escolhida';
+        }
+        
         // Iniciar carrosseis
         function startCarousels() {
-            // Carrossel automático de fotos
+            // Carrossel automático de fotos (5 segundos)
             setInterval(nextPhoto, 5000);
             
-            // Carrossel automático de poemas
-            setInterval(nextPoem, 15000);
+            // Carrossel automático de poemas (2 minutos = 120000 ms)
+            setInterval(nextPoem, 120000);
             
             // Adicionar clique nas fotos para fullscreen
             photoSlides.forEach(slide => {
@@ -1046,134 +1320,6 @@ mesmo que ela floresça em outros braços.
         function closeFullscreen() {
             const overlay = document.getElementById('fullscreenOverlay');
             overlay.style.display = 'none';
-        }
-        
-        // Música
-        function playMusic() {
-            const music = document.getElementById('backgroundMusic');
-            music.volume = 0.3;
-            
-            // Tentar tocar com interação do usuário
-            document.addEventListener('click', function playOnce() {
-                music.play().catch(e => console.log("Autoplay pode estar bloqueado"));
-                document.removeEventListener('click', playOnce);
-            });
-        }
-        
-        // Calendário
-        function createCalendar() {
-            const calendar = document.getElementById('calendar');
-            calendar.innerHTML = '';
-            
-            // Dias da semana
-            const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-            daysOfWeek.forEach(day => {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day';
-                dayElement.style.fontWeight = 'bold';
-                dayElement.textContent = day;
-                calendar.appendChild(dayElement);
-            });
-            
-            // Dias do mês (próximos 30 dias)
-            const today = new Date();
-            for (let i = 0; i < 35; i++) {
-                const date = new Date(today);
-                date.setDate(today.getDate() + i);
-                
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day';
-                dayElement.textContent = date.getDate();
-                dayElement.dataset.date = date.toISOString().split('T')[0];
-                
-                // Formatar data
-                const formattedDate = date.toLocaleDateString('pt-BR', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                
-                dayElement.title = formattedDate;
-                
-                // Não permitir datas passadas
-                if (i === 0) {
-                    dayElement.style.opacity = '0.5';
-                    dayElement.style.cursor = 'not-allowed';
-                    dayElement.title = 'Hoje - Escolha uma data futura';
-                } else {
-                    dayElement.onclick = () => selectDate(dayElement);
-                }
-                
-                calendar.appendChild(dayElement);
-            }
-        }
-        
-        function selectDate(element) {
-            // Remover seleção anterior
-            document.querySelectorAll('.calendar-day.selected').forEach(el => {
-                el.classList.remove('selected');
-            });
-            
-            // Selecionar nova data
-            element.classList.add('selected');
-            selectedDate = element.dataset.date;
-            
-            // Habilitar botão de confirmação
-            const confirmBtn = document.getElementById('confirmDate');
-            confirmBtn.disabled = false;
-            
-            // Formatar data para exibição
-            const date = new Date(selectedDate);
-            const formattedDate = date.toLocaleDateString('pt-BR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            confirmBtn.innerHTML = `<i class="fas fa-calendar-check"></i> Confirmar: ${formattedDate}`;
-        }
-        
-        function showCalendar() {
-            document.getElementById('calendarSection').style.display = 'block';
-            document.getElementById('calendarSection').scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        }
-        
-        function sendEmail() {
-            if (!selectedDate) return;
-            
-            const date = new Date(selectedDate);
-            const formattedDate = date.toLocaleDateString('pt-BR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            const subject = encodeURIComponent("Isa escolheu uma data para nos encontrarmos");
-            const body = encodeURIComponent(`A Isa escolheu a data: ${formattedDate}\n\nPor favor, entre em contato com ela para confirmar os detalhes do encontro em Aparecida.\n\nCom amor,\nSeu site especial`);
-            
-            const mailtoLink = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
-            
-            // Tentar abrir o cliente de email
-            window.open(mailtoLink, '_blank');
-            
-            // Mensagem de confirmação
-            alert(`Data ${formattedDate} selecionada! Um email será enviado para organizarmos nosso encontro em Aparecida.`);
-            
-            // Resetar seleção
-            selectedDate = null;
-            document.querySelectorAll('.calendar-day.selected').forEach(el => {
-                el.classList.remove('selected');
-            });
-            
-            const confirmBtn = document.getElementById('confirmDate');
-            confirmBtn.disabled = true;
-            confirmBtn.innerHTML = 'Confirmar Data Escolhida';
         }
         
         // Inicializar
