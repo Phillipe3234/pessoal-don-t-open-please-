@@ -1,214 +1,547 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Por quê?</title>
-    <style>
-        body {
-            background-color: #919090;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Isa — Se você abrir, leia com o coração</title>
 
-        h1 {
-            color: black;
-            font-size: 40px;
-            text-align: center;
-        }
+<!-- Fonte (se quiser, deixa; o navegador buscará online) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-        .carousel {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            max-width: 90%;
-            height: 280px;
-            margin: 0 auto 60px;
-            position: relative;
-        }
+<style>
+  :root{
+    --bg:#0f0f10;
+    --card:#faf7f5;
+    --muted:#c7c2bf;
+    --accent:#b45a5a;
+    --glass: rgba(255,255,255,0.06);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:linear-gradient(180deg,#0b0b0c 0%, #1a1414 60%);
+    color:var(--card);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
 
-        .carousel img {
-            height: 100%;
-            width: auto;
-            max-width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-            transition: opacity 0.5s ease-in-out;
-            position: absolute;
-            opacity: 0;
-            object-fit: contain;
-            cursor: pointer;
-            pointer-events: none;
-        }
+  .wrap{
+    width:100%;
+    max-width:980px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:16px;
+    padding:26px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.6);
+    position:relative;
+    overflow:hidden;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
 
-        .carousel img.active {
-            opacity: 1;
-            position: relative;
-            pointer-events: auto;
-        }
+  header{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    margin-bottom:16px;
+  }
+  .brand{
+    font-family: 'Playfair Display', serif;
+    font-size:28px;
+    letter-spacing:0.4px;
+    color:var(--card);
+  }
+  .subtitle{
+    color:var(--muted);
+    font-size:13px;
+  }
 
-        #fullscreen-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            cursor: pointer;
-        }
+  /* CARROSSEL */
+  .carousel{
+    position:relative;
+    height:420px;
+    border-radius:12px;
+    overflow:hidden;
+    background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .slides{
+    width:100%;
+    height:100%;
+    position:relative;
+  }
+  .slides img{
+    position:absolute;
+    inset:0;
+    margin:auto;
+    width:auto;
+    max-width:100%;
+    height:100%;
+    max-height:100%;
+    object-fit:cover;
+    border-radius:8px;
+    opacity:0;
+    transform:scale(1.02);
+    transition:opacity .8s ease, transform .8s ease, filter .8s ease;
+    filter:brightness(.9) saturate(.95);
+  }
+  .slides img.active{
+    opacity:1;
+    transform:scale(1);
+    filter:brightness(1) saturate(1);
+    z-index:2;
+  }
+  .controls{
+    position:absolute;
+    top:50%;
+    left:16px;
+    transform:translateY(-50%);
+    display:flex;
+    gap:8px;
+    z-index:10;
+  }
+  .controls button{
+    background:var(--glass);
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--card);
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    backdrop-filter: blur(6px);
+  }
+  .controls .next{ left:auto; right:16px; top:50%; transform:translateY(-50%); position:absolute; }
 
-        #fullscreen-container img {
-            max-width: 90%;
-            max-height: 90%;
-        }
+  .dots{
+    position:absolute;
+    bottom:14px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:8px;
+    z-index:20;
+  }
+  .dot{
+    width:12px;height:12px;border-radius:999px;background:rgba(255,255,255,0.12);cursor:pointer;
+    border:1px solid rgba(255,255,255,0.04);
+  }
+  .dot.active{background:var(--accent); box-shadow:0 4px 18px rgba(180,90,90,0.25)}
 
-        .text-center {
-            text-align: center;
-        }
+  /* POEMA / MENSAGEM */
+  .content{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:18px;
+    margin-top:18px;
+  }
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:18px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.03);
+  }
 
-        .poem {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 20px;
-            color: black;
-            line-height: 1.5;
-            text-align: center;
-        }
+  .poem-title{
+    font-family: 'Playfair Display', serif;
+    font-size:26px;
+    color:var(--card);
+    margin:0 0 6px 0;
+  }
+  .poem{
+    color:var(--card);
+    font-size:18px;
+    line-height:1.5;
+    font-family: 'Playfair Display', serif;
+    text-align:center;
+    white-space:pre-wrap;
+  }
 
-        .gift-links {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
+  .note{
+    color:var(--muted);
+    font-size:14px;
+    text-align:center;
+  }
 
-        .gift-box {
-            padding: 10px;
-            border-radius: 10px;
-            background-color: black;
-        }
+  .cta{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-top:8px;
+  }
+  .btn{
+    padding:10px 16px;
+    border-radius:10px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--card);
+    cursor:pointer;
+    font-weight:600;
+  }
+  .btn.primary{
+    background:linear-gradient(90deg,var(--accent), #7f3a3a);
+    border:none;
+    box-shadow:0 8px 30px rgba(180,90,90,0.18);
+  }
 
-        .gift-box a {
-            color: #919090;
-            text-decoration: none;
-        }
+  footer{
+    margin-top:14px;
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+  }
 
-        hr {
-            color: salmon;
-        }
+  /* FULLSCREEN */
+  #fullscreen{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(6,6,6,0.95);
+    z-index:9999;
+    padding:20px;
+  }
+  #fullscreen img{
+    max-width:95%;
+    max-height:95%;
+    border-radius:8px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.7);
+  }
 
-        h2 {
-            font-size: 30px;
-            text-align: center;
-        }
-    </style>
+  /* MODAL SENHA */
+  #lockModal{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85));
+    z-index:10000;
+  }
+  .lockCard{
+    background: #fff;
+    color:#111;
+    padding:22px;
+    width:min(420px,92%);
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 10px 40px rgba(0,0,0,0.5);
+    font-family:Inter,Arial;
+  }
+  .lockCard h3{margin:0 0 8px 0; font-size:20px}
+  .lockCard p{margin:0 0 12px 0; color:#444; font-size:14px}
+  .lockCard input{
+    width:100%;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid #e6e2e0;
+    margin-bottom:10px;
+    font-size:16px;
+  }
+  .lockCard .hint{font-size:12px;color:#888;margin-top:6px}
+  .small-muted{font-size:12px;color:#aaa;margin-top:8px}
+
+  @media (max-width:700px){
+    .carousel{height:320px}
+    .poem{font-size:16px}
+  }
+</style>
 </head>
 <body>
 
-    <h1>Por quê?</h1>
+  <div class="wrap" aria-live="polite">
+    <header>
+      <div>
+        <div class="brand">Isa — Ler com o coração</div>
+        <div class="subtitle">Leia até o fim. Feito com fé e com arrependimento.</div>
+      </div>
+    </header>
 
-    <section id="galeria">
-        <div class="carousel">
-            <img src="https://raw.githubusercontent.com/lipe3234/pessoal-don-t-open-please-/main/i1.jpg" class="active" alt="Foto 1" />
-            <img src="https://raw.githubusercontent.com/lipe3234/pessoal-don-t-open-please-/main/i2.jpg" alt="Foto 2" />
-            <img src="https://raw.githubusercontent.com/lipe3234/pessoal-don-t-open-please-/main/i3.jpg" alt="Foto 3" />
-            <img src="https://raw.githubusercontent.com/lipe3234/pessoal-don-t-open-please-/main/i4.jpg" alt="Foto 4" />
-            <img src="https://raw.githubusercontent.com/lipe3234/pessoal-don-t-open-please-/main/i5.jpg" alt="Foto 5" />
-        </div>
-    </section>
+    <!-- CARROSSEL -->
+    <div class="carousel card" aria-label="Galeria de fotos">
+      <div class="slides" id="slides">
+        <!-- As imagens devem estar na mesma pasta e nomeadas i1.JPG ... i5.JPG -->
+        <img src="i1.JPG" alt="Nós — foto 1" class="active" data-index="0" />
+        <img src="i2.JPG" alt="Nós — foto 2" data-index="1" />
+        <img src="i3.JPG" alt="Nós — foto 3" data-index="2" />
+        <img src="i4.JPG" alt="Nós — foto 4" data-index="3" />
+        <img src="i5.JPG" alt="Nós — foto 5" data-index="4" />
+      </div>
 
-    <!-- Container para fullscreen -->
-    <div id="fullscreen-container" onclick="closeFullscreen()">
-        <img id="fullscreen-img" src="" alt="Imagem em tela cheia">
+      <div class="controls" aria-hidden="false">
+        <button id="prev" aria-label="Imagem anterior">◀</button>
+        <button id="next" class="next" aria-label="Próxima imagem">▶</button>
+      </div>
+
+      <div class="dots" id="dots" aria-hidden="false">
+        <div class="dot active" data-dot="0"></div>
+        <div class="dot" data-dot="1"></div>
+        <div class="dot" data-dot="2"></div>
+        <div class="dot" data-dot="3"></div>
+        <div class="dot" data-dot="4"></div>
+      </div>
     </div>
 
-    <div class="poem">
-        Por que me sinto tão vazio?<br>
-        Por que a tristeza ainda me consome?<br>
-        Por que sinto vontade de chorar?<br>
-        Por que não sinto nem mais fome?<br><br>
+    <!-- CONTEÚDO: POEMA E MENSAGEM -->
+    <div class="content">
+      <div class="card">
+        <h2 class="poem-title">Se Você Voltar</h2>
+        <div class="poem" id="poema">
+Espero que, ao abrir essa página, você permita que o silêncio escute.
+Que os olhos, mesmo resistentes, não fechem a porta em definitivo.
+Que o vento leve embora o que ficou sujo entre nós
+e que o brilho que antes havia nos seus olhos não tenha sido apagado por inteiro.
 
-        Talvez eu ainda te quero<br>
-        Talvez eu ainda pense em ti<br>
-        Talvez eu ainda quero ficar velho, contigo<br>
-        Talvez eu esteja só pensando em mim<br><br>
+Se você voltar, prometo primeiro escutar.
+Prometo aprender a cuidar do seu tempo e do seu jeito.
+Prometo pedir perdão sempre que for preciso
+e praticar o amor que Deus me ensinou — com gestos simples, mas reais.
 
-        Pode ser que seja amor<br>
-        Bem que dizem que tudo pode machucar<br>
-        Só não pensei que seria assim tão doloroso<br>
-        te amar<br><br>
+Eu sei dos erros: do dia em que pedi amor no momento errado,
+das palavras que feriram, da ausência quando você precisava de colo.
+Sei do seu cansaço e de como lhe fiz carregar pedras.
+Hoje venho com as mãos vazias, mas com um coração que passou por labaredas
+e, no fogo, aprendeu que não quero mais ser motivo da sua dor.
 
-        Não me arrependo de ter me humilhado<br>
-        Nem de ter me doado<br>
-        Só espero que esse humilhado<br>
-        Realmente seja exaltado<br><br>
+A fé que nós temos diz que tudo pode ser curado.
+Peço a Nossa Senhora que toque seu coração antes que eu ainda precise,
+e peço a Jesus a coragem para ser melhor, sem repetir os mesmos passos.
 
-        Não digo isso porque sou um santo<br>
-        Mas porque dizem que é assim que funciona<br>
-        E se realmente for assim...<br>
-        Espero que você finalmente veja o quanto que te amo<br><br>
+Se você aceitar conversar — nem que seja uma vez, só para clarear —
+quero que seja para saber a verdade:
+se for para sermos, que seja no tempo certo, com respeito, com paz.
+Se for para não sermos, que eu consiga aprender a deixar você livre,
+com a mesma generosidade que você sempre mereceu.
+
+Isa — eu te amo: não como uma palavra vazia,
+mas como alguém que trocou a pressa por oração,
+a teimosia por silêncio e o orgulho por renúncia.
+Voltar? Se for vontade de Deus, eu vou estar pronto.
+Se não for, eu vou pedir por sua alegria — mesmo que ela floresça longe de mim.
+
+Se você sentir no fundo que o perdão merece ser tentado,
+vou cuidar de cada manhã como um novo recomeço.
+Se você não quiser, entenderei e rezarei pela sua paz.
+Mas, por favor, converse comigo — um encontro sincero,
+uma conversa em Aparecida, se for melhor para você.
+</div>
+
+        <div class="note" style="margin-top:12px;">
+          Escrevi com o coração — sem pressão, com respeito e com fé.
+        </div>
+
+        <div class="cta">
+          <button class="btn" id="openFullscreen">Ver imagem em tela cheia</button>
+          <button class="btn primary" id="downloadCopy">Baixar este poema (TXT)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0 0 8px 0;font-family:'Playfair Display',serif">Uma mensagem curta</h3>
+        <p class="note">
+          Isa, se ler: não é para forçar nada. É para abrir uma porta de conversa,
+          para que a verdade possa vir à luz e o que for da vontade de Deus possa florescer.
+        </p>
+
+        <div style="margin-top:10px">
+          <button class="btn" id="marcarAparecida">Sugerir encontro em Aparecida</button>
+          <div class="small-muted">Obs.: respeitarei qualquer resposta sua.</div>
+        </div>
+      </div>
     </div>
 
-    <h2>Lembra dos meus presentes?? <br> Não né? Vou te relembrar alguns...</h2>
+    <footer>Feito com fé. Senha protegida por JS.</footer>
+  </div>
 
-    <div class="gift-links">
-        <div class="gift-box">
-            <a href="https://lipe3234.github.io/hearth/">O coração pulsando até meu amor por você acabar...</a>
-        </div>
-        <div class="gift-box">
-            <a href="https://lipe3234.github.io/flor/">A primeira flor que te dei...</a>
-        </div>
-        <div class="gift-box">
-            <a href="https://lipe3234.github.io/Flower/">Os girassóis que você tanto ama...</a>
-        </div>
+  <!-- FULLSCREEN CONTAINER -->
+  <div id="fullscreen" role="dialog" aria-hidden="true">
+    <img src="" alt="Imagem em tela cheia" id="fsImg">
+  </div>
+
+  <!-- MODAL DE SENHA -->
+  <div id="lockModal" role="dialog" aria-modal="true" aria-label="Proteção por senha">
+    <div class="lockCard">
+      <h3>Uma coisa antes...</h3>
+      <p>Para ver tudo, digite a senha que eu deixei — é uma mensagem para você.</p>
+      <input id="senhaInput" type="password" placeholder="Digite a senha" autocomplete="off" />
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button class="btn primary" id="entrarBtn">Entrar</button>
+        <button class="btn" id="sairBtn">Sair</button>
+      </div>
+      <div class="hint">Dica: é um apelido carinhoso.</div>
     </div>
+  </div>
 
-    <hr>
-    <div class="text-center poem">
-        Queria ter te dado mais, só que percebi tarde demais o quanto que te amo....
-    </div>
+<script>
+  // SENHA (conforme pedido)
+  const senhaCorreta = "belalinda";
 
-    <script>
-        var senha = (window.prompt("digite a senha: "))
-        var senhacerta = "belalinda";
-        if (senha !== senhacerta){
-            window.location.href = "https://www.google.com";
-        }
-        else {
-            window.alert("Sejá bem vindo!")
-        }
-        function showFullscreen(src) {
-            const fullscreenContainer = document.getElementById('fullscreen-container');
-            const fullscreenImg = document.getElementById('fullscreen-img');
-            fullscreenImg.src = src;
-            fullscreenContainer.style.display = 'flex';
-        }
+  // elementos do modal
+  const lockModal = document.getElementById('lockModal');
+  const senhaInput = document.getElementById('senhaInput');
+  const entrarBtn = document.getElementById('entrarBtn');
+  const sairBtn = document.getElementById('sairBtn');
 
-        function closeFullscreen() {
-            const fullscreenContainer = document.getElementById('fullscreen-container');
-            fullscreenContainer.style.display = 'none';
-        }
+  function abrirConteudo(){
+    // esconde o modal
+    lockModal.style.display = 'none';
+    // foco no carrossel
+    document.getElementById('slides').focus();
+  }
 
-        // Ativar fullscreen ao clicar nas imagens do carrossel
-        const carouselImages = document.querySelectorAll('.carousel img');
-        carouselImages.forEach(img => {
-            img.addEventListener('click', () => {
-                showFullscreen(img.src);
-            });
-        });
+  function negarAcesso(){
+    // Mantive a ideia de redirecionar (mas com aviso)
+    alert('Acesso negado. Obrigado.');
+    window.location.href = "https://www.google.com/";
+  }
 
-        // Carrossel automático
-        let current = 0;
-        setInterval(() => {
-            carouselImages[current].classList.remove('active');
-            current = (current + 1) % carouselImages.length;
-            carouselImages[current].classList.add('active');
-        }, 4000);
-    </script>
+  entrarBtn.addEventListener('click', ()=>{
+    const v = senhaInput.value || '';
+    if (v.trim() === senhaCorreta){
+      abrirConteudo();
+      alert('Seja bem-vinda. Leia com calma.');
+    } else {
+      alert('Senha incorreta.');
+      senhaInput.value = '';
+      senhaInput.focus();
+    }
+  });
 
+  sairBtn.addEventListener('click', negarAcesso);
+
+  // permitir Enter
+  senhaInput.addEventListener('keydown', (e)=>{
+    if (e.key === 'Enter') entrarBtn.click();
+  });
+
+  // --- CARROSSEL ---
+  const slides = document.querySelectorAll('.slides img');
+  const dots = document.querySelectorAll('.dot');
+  let idx = 0;
+  let autoplay = true;
+  let timer = null;
+  const delay = 4000;
+
+  function showSlide(n){
+    slides.forEach((s,i)=>{
+      s.classList.toggle('active', i === n);
+    });
+    dots.forEach((d,i)=>{
+      d.classList.toggle('active', i === n);
+    });
+    idx = n;
+  }
+
+  function nextSlide(){
+    showSlide((idx + 1) % slides.length);
+  }
+  function prevSlide(){
+    showSlide((idx - 1 + slides.length) % slides.length);
+  }
+
+  document.getElementById('next').addEventListener('click', ()=>{
+    autoplay = false; nextSlide();
+  });
+  document.getElementById('prev').addEventListener('click', ()=>{
+    autoplay = false; prevSlide();
+  });
+
+  dots.forEach(d => {
+    d.addEventListener('click', ()=> {
+      autoplay = false;
+      showSlide(Number(d.dataset.dot));
+    });
+  });
+
+  slides.forEach(img => {
+    img.addEventListener('click', (e)=> {
+      // abrir essa imagem em fullscreen
+      openFullscreen(e.currentTarget.src);
+    });
+  });
+
+  // teclado
+  document.addEventListener('keydown',(e)=>{
+    if (lockModal.style.display === 'none'){ // só funciona se conteúdo aberto
+      if (e.key === 'ArrowRight') { autoplay=false; nextSlide(); }
+      if (e.key === 'ArrowLeft') { autoplay=false; prevSlide(); }
+      if (e.key === 'Escape') {
+        // fechar fullscreen se aberto
+        closeFullscreen();
+      }
+    }
+  });
+
+  // touch (swipe simples)
+  let touchStartX = null;
+  const carouselEl = document.querySelector('.carousel');
+  carouselEl.addEventListener('touchstart', (e)=> { touchStartX = e.changedTouches[0].clientX; autoplay=false; }, {passive:true});
+  carouselEl.addEventListener('touchend', (e)=>{
+    if (touchStartX === null) return;
+    const diff = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(diff) > 40){
+      if (diff < 0) nextSlide(); else prevSlide();
+    }
+    touchStartX = null;
+  }, {passive:true});
+
+  // autoplay
+  function startAutoplay(){
+    if (timer) clearInterval(timer);
+    timer = setInterval(()=> { if (autoplay) nextSlide(); }, delay);
+  }
+  startAutoplay();
+
+  // FULLSCREEN
+  const fullscreen = document.getElementById('fullscreen');
+  const fsImg = document.getElementById('fsImg');
+  function openFullscreen(src){
+    fsImg.src = src;
+    fullscreen.style.display = 'flex';
+    fullscreen.setAttribute('aria-hidden','false');
+  }
+  function closeFullscreen(){
+    fullscreen.style.display = 'none';
+    fullscreen.setAttribute('aria-hidden','true');
+    fsImg.src = '';
+  }
+  document.getElementById('openFullscreen').addEventListener('click', ()=> openFullscreen(slides[idx].src));
+  fullscreen.addEventListener('click', closeFullscreen);
+
+  // botão sugestão Aparecida (apenas link sugerido)
+  document.getElementById('marcarAparecida').addEventListener('click', ()=>{
+    alert('Se ela aceitar conversar, a sugestão de encontro em Aparecida é uma opção respeitosa e serena. Vai com humildade e oração.');
+  });
+
+  // baixar poema como .txt
+  document.getElementById('downloadCopy').addEventListener('click', ()=>{
+    const text = document.getElementById('poema').innerText;
+    const blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'poema-isa.txt';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  // Antes de fechar a aba, se o modal estiver ativo, pergunta (proteção leve)
+  window.addEventListener('beforeunload', (e)=>{
+    if (lockModal.style.display !== 'none') {
+      // nada: permite sair sem bloqueio
+    }
+  });
+
+  // foco inicial no input
+  senhaInput.focus();
+</script>
 </body>
 </html>
