@@ -2,7 +2,11 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Para Isabela - Se Você Voltar...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Isa - Se Você Voltar...</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -10,625 +14,1183 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #e63946;
+            --secondary: #ffafcc;
+            --accent: #ff006e;
+            --gold: #ffd166;
+            --dark: #1d3557;
+            --light: #f1faee;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
         body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #f0f0f0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0c0b15 0%, #1a1625 50%, #2d1b3d 100%);
+            color: #f1faee;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            text-align: center;
+        /* Flores caindo */
+        .flower {
+            position: fixed;
+            top: -50px;
+            font-size: 24px;
+            z-index: 1;
+            opacity: 0.7;
+            animation: fall linear forwards;
+            pointer-events: none;
         }
 
-        .password-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Tela de senha */
+        .password-screen {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(rgba(13, 12, 22, 0.95), rgba(29, 21, 49, 0.98)), 
+                        url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             z-index: 1000;
+            backdrop-filter: blur(5px);
         }
 
-        .password-section.hidden {
-            display: none;
+        .password-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 50px 40px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+                        0 0 100px rgba(230, 57, 70, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .password-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        .password-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 175, 204, 0.1) 0%, transparent 70%);
+            z-index: -1;
         }
 
-        .password-box h2 {
-            color: #fff;
+        .password-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 209, 102, 0.5);
+        }
+
+        .password-subtitle {
+            color: var(--secondary);
+            font-size: 1.1rem;
             margin-bottom: 30px;
-            font-size: 24px;
-            font-weight: 300;
-            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .password-input-container {
+            position: relative;
+            margin: 30px 0;
         }
 
         .password-input {
-            padding: 15px 20px;
-            font-size: 18px;
-            border: 2px solid #6a11cb;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
             color: white;
-            width: 300px;
             text-align: center;
-            margin-bottom: 20px;
             transition: all 0.3s;
         }
 
         .password-input:focus {
             outline: none;
-            border-color: #2575fc;
-            box-shadow: 0 0 15px rgba(37, 117, 252, 0.5);
+            border-color: var(--accent);
+            box-shadow: 0 0 25px rgba(255, 0, 110, 0.4);
         }
 
         .password-btn {
-            padding: 15px 40px;
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            background: linear-gradient(45deg, var(--accent), var(--primary));
             border: none;
-            border-radius: 10px;
+            padding: 16px 40px;
+            font-size: 1.2rem;
             color: white;
-            font-size: 18px;
+            border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: bold;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 10px;
+            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
         }
 
         .password-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(230, 57, 70, 0.4);
         }
 
-        .header {
-            margin: 40px 0;
+        .hints {
+            margin-top: 30px;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .hint {
+            color: var(--secondary);
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        .flower-icon {
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            display: none;
             opacity: 0;
-            animation: fadeIn 1.5s ease-out 0.5s forwards;
+            transition: opacity 2s;
         }
 
-        .title {
-            font-size: 42px;
-            font-weight: 300;
-            letter-spacing: 3px;
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            margin-bottom: 10px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        /* Cabeçalho */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255, 209, 102, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
         .subtitle {
-            font-size: 18px;
-            color: #a0a0d0;
-            font-weight: 300;
-            letter-spacing: 1px;
+            font-size: 1.3rem;
+            color: var(--secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Carrossel de fotos */
+        .carousel-section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .carousel-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--light);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .carousel-title::before {
+            content: '❤';
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+        }
+
+        .carousel-title::after {
+            content: '❤';
+            position: absolute;
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
         }
 
         .carousel-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
-            margin: 50px auto;
-            opacity: 0;
-            animation: fadeIn 2s ease-out 1s forwards;
-        }
-
-        .carousel {
-            width: 100%;
             height: 500px;
-            border-radius: 20px;
+            border-radius: 25px;
             overflow: hidden;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
         }
 
         .carousel-slide {
+            position: absolute;
             width: 100%;
             height: 100%;
-            position: absolute;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
             object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            cursor: pointer;
         }
 
         .carousel-slide.active {
             opacity: 1;
         }
 
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 10;
-        }
-
-        .carousel-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .prev-btn {
-            left: 20px;
-        }
-
-        .next-btn {
-            right: 20px;
-        }
-
-        .carousel-dots {
+        .carousel-controls {
             position: absolute;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
+            gap: 15px;
+            z-index: 10;
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
+        .carousel-dot {
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .dot.active {
-            background: #2575fc;
+        .carousel-dot.active {
+            background: var(--accent);
             transform: scale(1.3);
+            box-shadow: 0 0 15px var(--accent);
         }
 
-        .poem-section {
-            background: rgba(255, 255, 255, 0.05);
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(230, 57, 70, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav.prev {
+            left: 20px;
+        }
+
+        .carousel-nav.next {
+            right: 20px;
+        }
+
+        /* Carrossel de poemas */
+        .poem-carousel-section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .poem-carousel {
+            background: linear-gradient(135deg, rgba(255, 175, 204, 0.1), rgba(29, 53, 87, 0.3));
             backdrop-filter: blur(10px);
-            padding: 50px;
-            border-radius: 20px;
-            margin: 60px 0;
+            border-radius: 25px;
+            padding: 40px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0;
-            animation: fadeIn 2s ease-out 1.5s forwards;
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .poem-carousel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+        }
+
+        .poem-slide {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .poem-slide.active {
+            display: block;
         }
 
         .poem-title {
-            font-size: 28px;
-            color: #6a11cb;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--gold);
             margin-bottom: 30px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-align: center;
+            position: relative;
+            display: inline-block;
         }
 
-        .poem {
-            font-size: 20px;
+        .poem-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        .poem-content {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
             line-height: 1.8;
-            text-align: center;
+            color: var(--light);
             white-space: pre-line;
-            color: #e0e0ff;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-
-        .poem .highlight {
-            color: #2575fc;
-            font-style: italic;
-            font-weight: normal;
-        }
-
-        .poem .strong {
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .footer {
-            margin-top: 50px;
-            padding: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
-            color: #a0a0d0;
-            font-size: 14px;
-            letter-spacing: 1px;
-            opacity: 0;
-            animation: fadeIn 2s ease-out 2s forwards;
+            padding: 0 20px;
         }
 
-        .heart {
-            color: #ff3366;
-            animation: heartbeat 1.5s infinite;
+        .poem-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
         }
 
-        .signature {
-            margin-top: 40px;
-            font-size: 18px;
-            color: #6a11cb;
-            text-align: right;
+        .poem-nav:hover {
+            background: var(--accent);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .poem-nav.prev {
+            left: 20px;
+        }
+
+        .poem-nav.next {
+            right: 20px;
+        }
+
+        .poem-indicator {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Seção de música */
+        .music-section {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .music-player {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--secondary);
+        }
+
+        .music-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--light);
+            margin-bottom: 20px;
+        }
+
+        .music-video {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid var(--accent);
+        }
+
+        .music-note {
+            color: var(--gold);
+            font-size: 1.2rem;
             font-style: italic;
-            letter-spacing: 1px;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Mensagem curta */
+        .short-message {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .message-box {
+            background: linear-gradient(135deg, rgba(29, 53, 87, 0.6), rgba(230, 57, 70, 0.2));
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-box::before {
+            content: '✉';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            opacity: 0.1;
+            color: var(--gold);
+        }
+
+        .message-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--light);
+            margin-bottom: 30px;
+        }
+
+        /* Calendário para Aparecida */
+        .calendar-section {
+            padding: 40px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .calendar-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid var(--secondary);
+        }
+
+        .calendar-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--light);
+            margin-bottom: 30px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .calendar-day {
+            padding: 15px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calendar-day:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .calendar-day.selected {
+            background: var(--gold);
+            color: var(--dark);
+            font-weight: bold;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 20px auto;
+            font-weight: 600;
+        }
+
+        .confirm-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--secondary);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+
+        .obs {
+            font-style: italic;
+            color: var(--gold);
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+
+        .heart-beat {
+            color: var(--accent);
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
         }
 
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.2); }
         }
 
-        .loading {
-            display: none;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .password-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            .carousel-container {
+                height: 350px;
+            }
+            
+            .poem-content {
+                font-size: 1.5rem;
+            }
+            
+            .carousel-title, .poem-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Fullscreen para imagens */
+        .fullscreen-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
             z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .loading.show {
-            display: flex;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid #6a11cb;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .audio-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             cursor: pointer;
-            z-index: 100;
-            transition: all 0.3s;
         }
 
-        .audio-control:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .carousel {
-                height: 400px;
-            }
-            
-            .title {
-                font-size: 32px;
-            }
-            
-            .poem {
-                font-size: 18px;
-            }
-            
-            .password-box {
-                padding: 30px 20px;
-            }
-            
-            .password-input {
-                width: 250px;
-            }
+        .fullscreen-image {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 15px;
+            box-shadow: 0 0 100px rgba(255, 0, 110, 0.3);
         }
     </style>
 </head>
 <body>
+    <!-- Flores caindo -->
+    <div id="flowersContainer"></div>
+
     <!-- Tela de senha -->
-    <div class="password-section" id="passwordSection">
-        <div class="password-box">
-            <h2>Esta mensagem é apenas para você, Isabela</h2>
-            <input type="password" id="passwordInput" class="password-input" placeholder="Digite a palavra especial">
-            <button onclick="checkPassword()" class="password-btn">Entrar no Coração</button>
+    <div class="password-screen" id="passwordScreen">
+        <div class="password-container">
+            <h1 class="password-title">Para Isa</h1>
+            <p class="password-subtitle">Esta mensagem foi feita especialmente para você, com todo o meu coração</p>
+            
+            <div class="password-input-container">
+                <input type="password" id="passwordInput" class="password-input" placeholder="Digite a senha especial...">
+            </div>
+            
+            <button onclick="checkPassword()" class="password-btn">
+                <i class="fas fa-heart"></i> Abrir Meu Coração
+            </button>
+            
+            <div class="hints">
+                <p class="hint"><i class="fas fa-seedling flower-icon"></i> Dica 1: Apelido carinhoso que usava com você, além de "momo", "amor", "pretinha".</p>
+                <p class="hint"><i class="fas fa-heart flower-icon"></i> Dica 2: O nome do seu nome que você me disse que gostava mais do que Isabela, na época...</p>
+            </div>
         </div>
     </div>
 
-    <!-- Tela de carregamento -->
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <div>Preparando algo especial para você...</div>
-    </div>
-
-    <!-- Conteúdo principal -->
-    <div class="container" id="mainContent" style="display: none;">
-        <div class="header">
-            <h1 class="title">Se Você Voltar...</h1>
-            <p class="subtitle">Uma carta para o coração mais importante da minha vida</p>
-        </div>
-
-        <!-- Carrossel de fotos -->
-        <div class="carousel-container">
-            <div class="carousel">
-                <img src="i1.jpg" class="carousel-slide active" alt="Nossa memória 1">
-                <img src="i2.jpg" class="carousel-slide" alt="Nossa memória 2">
-                <img src="i3.jpg" class="carousel-slide" alt="Nossa memória 3">
-                <img src="i4.jpg" class="carousel-slide" alt="Nossa memória 4">
-                <img src="i5.jpg" class="carousel-slide" alt="Nossa memória 5">
-            </div>
-            <button class="carousel-btn prev-btn" onclick="prevSlide()">‹</button>
-            <button class="carousel-btn next-btn" onclick="nextSlide()">›</button>
-            <div class="carousel-dots">
-                <span class="dot active" onclick="goToSlide(0)"></span>
-                <span class="dot" onclick="goToSlide(1)"></span>
-                <span class="dot" onclick="goToSlide(2)"></span>
-                <span class="dot" onclick="goToSlide(3)"></span>
-                <span class="dot" onclick="goToSlide(4)"></span>
-            </div>
-        </div>
-
-        <!-- Poema -->
-        <div class="poem-section">
-            <h2 class="poem-title">Tudo Vai Ser Diferente Se Voltarmos</h2>
-            <div class="poem">
-                Se você voltar... saberá que cada dia sem você
-                foi uma aula sobre o que realmente importa.
-                Aprendi que o amor não é apenas sentir,
-                mas escolher, todos os dias, mesmo nos silêncios.
-
-                <span class="highlight">Se você voltar...</span> verá que o homem que errou
-                agora sabe que flores não são apenas para datas,
-                mas para todos os dias em que você respira.
-                Que atenção não é um favor, mas uma necessidade sagrada.
-
-                <span class="highlight">Se você voltar...</span> encontrará alguém que entendeu
-                que pedidos devem ser feitos com joelhos no chão
-                e coração nas mãos, não apenas com palavras.
-                Que o respeito começa antes do "sim" e continua
-                depois de cada "não".
-
-                <span class="strong">Se você voltar...</span> não verá mais o menino assustado
-                que começou tudo errado, mas o homem que carrega
-                nas costas o peso das lições aprendidas,
-                e nas mãos a leveza do perdão recebido.
-
-                Durante <span class="highlight">11 meses e 26 dias</span> de noites frias,
-                eu reconstruí cada pedaço quebrado.
-                Não para te impressionar, mas para ser digno
-                do amor que sempre mereceste.
-
-                <span class="strong">Se você voltar...</span> será sob a benção d'Aquela
-                a quem ambos consagramos nossos corações.
-                Será no tempo de Deus, não no desespero humano.
-                Será com a paciência dos santos e a paixão dos poetas.
-
-                Eu não prometo perfeição - ainda carrego minhas cicatrizes
-                e o DP que testemunha minhas batalhas.
-                Mas prometo transparência em cada sombra,
-                e mãos estendidas em cada tempestade.
-
-                <span class="highlight">Se você voltar...</span> nossos erros passados
-                não serão fantasmas, mas livros fechados
-                em prateleiras altas. Não esquecidos,
-                mas transformados em degraus.
-
-                Porque o amor que sobreviveu à distância,
-                ao silêncio, às cinco conversas e aos buquês não entregues,
-                é o mesmo que agora bate neste peito
-                com a força de quem sabe o valor do que quase perdeu.
-
-                <span class="strong">Isabela</span>, se voltar, saiba:
-                Não será um recomeço onde erramos,
-                mas um <span class="highlight">novo caminho</span> onde aprendemos.
-                Onde cada olhar será uma oração,
-                cada toque um sacramento,
-                cada dia uma consagração.
-
-                E se não voltar... guardarei esta verdade:
-                Deus usou seus olhos para me ensinar a ver,
-                 suas mãos para me ensinar a tocar,
-                 seu coração - mesmo fechado - para me ensinar a amar.
-
-                Mas <span class="strong">ah, se você voltar...</span>
-                Tudo, tudo será diferente.
-                Porque eu já sou diferente.
-                E o amor? Esse nunca mudou.
-                Só cresceu. Só amadureceu. Só aprendeu a esperar.
-                Só aprendeu a amar melhor.
-            </div>
-            <div class="signature">
-                Com todo o amor que cabe em um coração que espera,<br>
-                e toda a fé que cabe em uma alma que reza.
-            </div>
-        </div>
-
-        <!-- Controle de áudio -->
-        <div class="audio-control" onclick="toggleMusic()">
-            <span id="musicIcon">♪</span>
-        </div>
-
-        <div class="footer">
-            <p>Esta mensagem foi escrita com as orações de <span class="heart">❤</span> 352 dias</p>
-            <p>"O amor é paciente, o amor é bondoso..." - 1 Coríntios 13:4</p>
-        </div>
-    </div>
-
-    <!-- Áudio de fundo -->
+    <!-- Áudio -->
     <audio id="backgroundMusic" loop>
-        <source src="https://assets.codepen.io/1468070/For+Elise+by+Beethoven.mp3" type="audio/mpeg">
+        <source src="https://www.youtube.com/embed/RiQmdpW56RE?autoplay=1&mute=0" type="audio/mpeg">
     </audio>
 
+    <!-- Conteúdo Principal -->
+    <div class="main-content" id="mainContent">
+        <!-- Cabeçalho -->
+        <div class="header">
+            <h1 class="main-title">Se Você Voltar...</h1>
+            <p class="subtitle">Tudo será diferente. Cada detalhe, cada gesto, cada olhar. Porque eu mudei. Porque aprendi a amar da forma que você merece.</p>
+        </div>
+
+        <!-- Carrossel de Fotos -->
+        <div class="carousel-section">
+            <h2 class="carousel-title">Nossas Memórias</h2>
+            <div class="carousel-container">
+                <img src="i1.JPG" class="carousel-slide active" alt="Nossa memória especial 1">
+                <img src="i2.JPG" class="carousel-slide" alt="Nossa memória especial 2">
+                <img src="i3.JPG" class="carousel-slide" alt="Nossa memória especial 3">
+                <img src="i4.JPG" class="carousel-slide" alt="Nossa memória especial 4">
+                <img src="i5.JPG" class="carousel-slide" alt="Nossa memória especial 5">
+                
+                <button class="carousel-nav prev" onclick="prevPhoto()">‹</button>
+                <button class="carousel-nav next" onclick="nextPhoto()">›</button>
+                
+                <div class="carousel-controls" id="photoDots"></div>
+            </div>
+        </div>
+
+        <!-- Carrossel de Poemas -->
+        <div class="poem-carousel-section">
+            <div class="poem-carousel">
+                <!-- Poema 1 -->
+                <div class="poem-slide active">
+                    <h3 class="poem-title">Se Você Voltar...</h3>
+                    <div class="poem-content">
+Se você voltar, saiba que cada dia sem você
+foi uma lição de humildade, um aprendizado sobre amor.
+
+Se você voltar, encontrará um homem transformado,
+que trocou a pressa pela paciência,
+o orgulho pela oração, o desespero pela fé.
+
+Se você voltar, nossas mãos se encontrarão
+não mais pelo acaso, mas pela vontade de Deus.
+Nossos passos se alinharão não pela paixão cega,
+mas pela luz que vem do céu.
+
+Se você voltar, será sob a benção de Nossa Senhora,
+no santuário onde tudo começou a fazer sentido.
+Será com a consagração que nos une,
+mesmo quando tudo parecia perdido.
+
+Se você voltar... ah, se você voltar...
+Cada manhã será um milagre,
+cada olhar uma oração,
+cada toque um sacramento.
+
+Mas se não voltar, guardarei em mim
+a gratidão por ter te conhecido,
+por ter amado, por ter sido amado,
+por ter aprendido contigo o que é amar de verdade.
+                    </div>
+                </div>
+                
+                <!-- Poema 2 -->
+                <div class="poem-slide">
+                    <h3 class="poem-title">11 Meses e 26 Dias</h3>
+                    <div class="poem-content">
+Onze meses e vinte e seis dias...
+Tempo suficiente para um coração se quebrar
+e se reconstruir pedaço por pedaço.
+
+Onze meses e vinte e seis noites
+pensando em cada sorriso seu que não causei,
+em cada abraço que não dei,
+em cada flor que prometi e não entreguei.
+
+Aprendi que amor não é posse,
+é cuidado. Não é exigência,
+é entrega. Não é ciúme,
+é confiança. Não é dor,
+é cura.
+
+Aprendi rezando por você,
+pedindo a Nossa Senhora
+que te protegesse mesmo longe de mim,
+que te abençoasse mesmo com raiva de mim,
+que te fizesse feliz mesmo sem mim.
+
+E hoje, depois de quase um ano,
+o que sinto é mais puro, mais verdadeiro.
+Não é mais aquela paixão que sufoca,
+é o amor que liberta, que respeita,
+que espera no tempo de Deus.
+
+Porque se for para ser,
+será lindo, será certo,
+será abençoado.
+E se não for...
+eu vou aprender a amar você
+de um novo jeito:
+rezando pela sua felicidade,
+mesmo que ela floresça em outros braços.
+                    </div>
+                </div>
+                
+                <button class="poem-nav prev" onclick="prevPoem()">‹</button>
+                <button class="poem-nav next" onclick="nextPoem()">›</button>
+            </div>
+            <div class="poem-indicator" id="poemIndicator">Poema 1 de 2</div>
+        </div>
+
+        <!-- Música -->
+        <div class="music-section">
+            <div class="music-player">
+                <h3 class="music-title">Sensível Demais - Jorge Vercillo</h3>
+                <div class="music-video">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/RiQmdpW56RE?autoplay=1&mute=0&controls=1&modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <p class="music-note">A música que sempre me lembra você... porque você é sensível demais, linda demais, especial demais.</p>
+            </div>
+        </div>
+
+        <!-- Mensagem Curta -->
+        <div class="short-message">
+            <div class="message-box">
+                <div class="message-text">
+                    Isa, se você está lendo isso, saiba que não é para pressionar, não é para cobrar, não é para fazer você se sentir culpada. É apenas para dizer que eu mudei, que eu cresci, que eu aprendi. E que se um dia você sentir no coração que podemos conversar, eu estarei aqui, com respeito, com fé, com o coração aberto. Porque o que sinto por você é real, é profundo, e merece pelo menos uma conversa honesta.
+                </div>
+                
+                <button class="password-btn" onclick="showCalendar()">
+                    <i class="fas fa-church"></i> Sugerir Encontro em Aparecida
+                </button>
+                
+                <p class="obs">
+                    OBS: Respeitarei qualquer resposta sua. Se for sim, marcaremos com calma. Se for não, aceitarei com gratidão pelo tempo que tivemos. Mas preciso saber, para seguir em frente ou para recomeçar ao seu lado.
+                </p>
+            </div>
+        </div>
+
+        <!-- Calendário -->
+        <div class="calendar-section" id="calendarSection">
+            <div class="calendar-container">
+                <h3 class="calendar-title">Escolha uma data para nos encontrarmos</h3>
+                <div class="calendar" id="calendar">
+                    <!-- Dias serão gerados por JavaScript -->
+                </div>
+                <button class="confirm-btn" id="confirmDate" disabled onclick="sendEmail()">
+                    Confirmar Data Escolhida
+                </button>
+                <p class="obs">Escolha um dia que seja bom para você. Iremos nos encontrar com respeito e oração.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Feito com <span class="heart-beat">❤</span> por alguém que te ama mais do que as palavras podem dizer</p>
+            <p class="obs">"O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha." - 1 Coríntios 13:4</p>
+        </div>
+    </div>
+
+    <!-- Fullscreen para imagens -->
+    <div class="fullscreen-overlay" id="fullscreenOverlay" onclick="closeFullscreen()">
+        <img class="fullscreen-image" id="fullscreenImage" src="" alt="">
+    </div>
+
     <script>
-        // Senha
-        const CORRECT_PASSWORD = "belalinda";
+        // Configurações
+        const CORRECT_PASSWORD = "vitória";
+        const EMAIL_TO = "phillipelimapravatti@gmail.com";
+        let selectedDate = null;
         
+        // Elementos principais
+        const passwordScreen = document.getElementById('passwordScreen');
+        const mainContent = document.getElementById('mainContent');
+        const flowersContainer = document.getElementById('flowersContainer');
+        const passwordInput = document.getElementById('passwordInput');
+        
+        // Criar flores caindo
+        function createFlowers() {
+            const flowers = ['🌸', '🌺', '🌷', '🌹', '💐', '🥀', '🌻', '🌼'];
+            const numFlowers = 30;
+            
+            for (let i = 0; i < numFlowers; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.className = 'flower';
+                    flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+                    
+                    // Posição aleatória
+                    flower.style.left = Math.random() * 100 + 'vw';
+                    flower.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    
+                    // Tempo de animação aleatório
+                    const duration = Math.random() * 10 + 10;
+                    flower.style.animationDuration = duration + 's';
+                    
+                    flowersContainer.appendChild(flower);
+                    
+                    // Remover após animação
+                    setTimeout(() => {
+                        flower.remove();
+                    }, duration * 1000);
+                }, i * 300);
+            }
+            
+            // Criar novas flores continuamente
+            setInterval(() => {
+                createFlower();
+            }, 500);
+        }
+        
+        function createFlower() {
+            const flowers = ['🌸', '🌺', '🌷', '🌹', '💐', '🌻'];
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+            
+            flower.style.left = Math.random() * 100 + 'vw';
+            flower.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            
+            const duration = Math.random() * 10 + 10;
+            flower.style.animationDuration = duration + 's';
+            
+            flowersContainer.appendChild(flower);
+            
+            setTimeout(() => {
+                flower.remove();
+            }, duration * 1000);
+        }
+        
+        // Verificar senha
         function checkPassword() {
-            const input = document.getElementById('passwordInput').value;
-            const passwordSection = document.getElementById('passwordSection');
-            const loading = document.getElementById('loading');
-            const mainContent = document.getElementById('mainContent');
+            const input = passwordInput.value.trim().toLowerCase();
             
             if (input === CORRECT_PASSWORD) {
-                // Mostrar loading
-                loading.classList.add('show');
+                // Efeito de transição
+                passwordScreen.style.opacity = '0';
+                passwordScreen.style.transition = 'opacity 1.5s';
                 
-                // Simular carregamento
                 setTimeout(() => {
-                    passwordSection.classList.add('hidden');
-                    loading.classList.remove('show');
+                    passwordScreen.style.display = 'none';
                     mainContent.style.display = 'block';
                     
-                    // Iniciar música suavemente
+                    // Animação de entrada
                     setTimeout(() => {
-                        const music = document.getElementById('backgroundMusic');
-                        music.volume = 0.3;
-                        music.play().catch(e => console.log("Autoplay bloqueado"));
-                    }, 1000);
+                        mainContent.style.opacity = '1';
+                        startCarousels();
+                        createCalendar();
+                    }, 100);
                     
-                    // Iniciar carrossel
-                    startCarousel();
-                }, 2000);
+                    // Iniciar música
+                    playMusic();
+                }, 1500);
             } else {
-                alert('Esta mensagem é apenas para ela...');
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('passwordInput').focus();
+                // Efeito de erro
+                passwordInput.style.borderColor = 'var(--accent)';
+                passwordInput.style.animation = 'shake 0.5s';
+                passwordInput.value = '';
+                
+                setTimeout(() => {
+                    passwordInput.style.borderColor = 'var(--secondary)';
+                    passwordInput.style.animation = '';
+                }, 500);
+                
+                alert('Senha incorreta. Tente novamente com carinho.');
             }
         }
         
         // Permitir Enter na senha
-        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+        passwordInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 checkPassword();
             }
         });
         
-        // Carrossel
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.dot');
+        // Iniciar flores
+        createFlowers();
         
-        function updateCarousel() {
-            slides.forEach((slide, index) => {
-                slide.classList.remove('active');
-                dots[index].classList.remove('active');
-            });
-            
-            slides[currentSlide].classList.add('active');
-            dots[currentSlide].classList.add('active');
-        }
+        // Carrossel de fotos
+        let currentPhotoIndex = 0;
+        const photoSlides = document.querySelectorAll('.carousel-slide');
+        const photoDotsContainer = document.getElementById('photoDots');
         
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateCarousel();
-        }
-        
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            updateCarousel();
-        }
-        
-        function goToSlide(index) {
-            currentSlide = index;
-            updateCarousel();
-        }
-        
-        function startCarousel() {
-            setInterval(nextSlide, 5000);
-        }
-        
-        // Controle de música
-        const music = document.getElementById('backgroundMusic');
-        const musicIcon = document.getElementById('musicIcon');
-        let isPlaying = false;
-        
-        function toggleMusic() {
-            if (isPlaying) {
-                music.pause();
-                musicIcon.textContent = '♪';
-            } else {
-                music.play();
-                musicIcon.textContent = '♫';
-            }
-            isPlaying = !isPlaying;
-        }
-        
-        // Efeitos visuais
-        document.addEventListener('DOMContentLoaded', function() {
-            // Foco no input de senha
-            document.getElementById('passwordInput').focus();
-            
-            // Efeito de digitação no subtítulo
-            const subtitle = document.querySelector('.subtitle');
-            const text = subtitle.textContent;
-            subtitle.textContent = '';
-            let i = 0;
-            
-            function typeWriter() {
-                if (i < text.length) {
-                    subtitle.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 50);
-                }
-            }
-            
-            // Iniciar quando o conteúdo principal for mostrado
-            setTimeout(typeWriter, 3000);
+        // Criar dots para as fotos
+        photoSlides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+            dot.onclick = () => goToPhoto(index);
+            photoDotsContainer.appendChild(dot);
         });
         
-        // Verificar se as imagens existem, caso contrário usar placeholders
-        window.addEventListener('load', function() {
-            const images = document.querySelectorAll('.carousel-slide');
-            images.forEach(img => {
-                img.onerror = function() {
-                    this.src = 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80';
-                    this.alt = 'Imagem de memória especial';
-                };
+        const photoDots = document.querySelectorAll('.carousel-dot');
+        
+        function updatePhotoCarousel() {
+            photoSlides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentPhotoIndex);
             });
+            
+            photoDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentPhotoIndex);
+            });
+        }
+        
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % photoSlides.length;
+            updatePhotoCarousel();
+        }
+        
+        function prevPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + photoSlides.length) % photoSlides.length;
+            updatePhotoCarousel();
+        }
+        
+        function goToPhoto(index) {
+            currentPhotoIndex = index;
+            updatePhotoCarousel();
+        }
+        
+        // Carrossel de poemas
+        let currentPoemIndex = 0;
+        const poemSlides = document.querySelectorAll('.poem-slide');
+        const poemIndicator = document.getElementById('poemIndicator');
+        
+        function updatePoemCarousel() {
+            poemSlides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentPoemIndex);
+            });
+            
+            poemIndicator.textContent = `Poema ${currentPoemIndex + 1} de ${poemSlides.length}`;
+        }
+        
+        function nextPoem() {
+            currentPoemIndex = (currentPoemIndex + 1) % poemSlides.length;
+            updatePoemCarousel();
+        }
+        
+        function prevPoem() {
+            currentPoemIndex = (currentPoemIndex - 1 + poemSlides.length) % poemSlides.length;
+            updatePoemCarousel();
+        }
+        
+        // Iniciar carrosseis
+        function startCarousels() {
+            // Carrossel automático de fotos
+            setInterval(nextPhoto, 5000);
+            
+            // Carrossel automático de poemas
+            setInterval(nextPoem, 15000);
+            
+            // Adicionar clique nas fotos para fullscreen
+            photoSlides.forEach(slide => {
+                slide.onclick = () => openFullscreen(slide.src);
+            });
+        }
+        
+        // Fullscreen para imagens
+        function openFullscreen(src) {
+            const overlay = document.getElementById('fullscreenOverlay');
+            const image = document.getElementById('fullscreenImage');
+            
+            image.src = src;
+            overlay.style.display = 'flex';
+        }
+        
+        function closeFullscreen() {
+            const overlay = document.getElementById('fullscreenOverlay');
+            overlay.style.display = 'none';
+        }
+        
+        // Música
+        function playMusic() {
+            const music = document.getElementById('backgroundMusic');
+            music.volume = 0.3;
+            
+            // Tentar tocar com interação do usuário
+            document.addEventListener('click', function playOnce() {
+                music.play().catch(e => console.log("Autoplay pode estar bloqueado"));
+                document.removeEventListener('click', playOnce);
+            });
+        }
+        
+        // Calendário
+        function createCalendar() {
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+            
+            // Dias da semana
+            const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            daysOfWeek.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.style.fontWeight = 'bold';
+                dayElement.textContent = day;
+                calendar.appendChild(dayElement);
+            });
+            
+            // Dias do mês (próximos 30 dias)
+            const today = new Date();
+            for (let i = 0; i < 35; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = date.getDate();
+                dayElement.dataset.date = date.toISOString().split('T')[0];
+                
+                // Formatar data
+                const formattedDate = date.toLocaleDateString('pt-BR', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                dayElement.title = formattedDate;
+                
+                // Não permitir datas passadas
+                if (i === 0) {
+                    dayElement.style.opacity = '0.5';
+                    dayElement.style.cursor = 'not-allowed';
+                    dayElement.title = 'Hoje - Escolha uma data futura';
+                } else {
+                    dayElement.onclick = () => selectDate(dayElement);
+                }
+                
+                calendar.appendChild(dayElement);
+            }
+        }
+        
+        function selectDate(element) {
+            // Remover seleção anterior
+            document.querySelectorAll('.calendar-day.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Selecionar nova data
+            element.classList.add('selected');
+            selectedDate = element.dataset.date;
+            
+            // Habilitar botão de confirmação
+            const confirmBtn = document.getElementById('confirmDate');
+            confirmBtn.disabled = false;
+            
+            // Formatar data para exibição
+            const date = new Date(selectedDate);
+            const formattedDate = date.toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            confirmBtn.innerHTML = `<i class="fas fa-calendar-check"></i> Confirmar: ${formattedDate}`;
+        }
+        
+        function showCalendar() {
+            document.getElementById('calendarSection').style.display = 'block';
+            document.getElementById('calendarSection').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+        
+        function sendEmail() {
+            if (!selectedDate) return;
+            
+            const date = new Date(selectedDate);
+            const formattedDate = date.toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const subject = encodeURIComponent("Isa escolheu uma data para nos encontrarmos");
+            const body = encodeURIComponent(`A Isa escolheu a data: ${formattedDate}\n\nPor favor, entre em contato com ela para confirmar os detalhes do encontro em Aparecida.\n\nCom amor,\nSeu site especial`);
+            
+            const mailtoLink = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+            
+            // Tentar abrir o cliente de email
+            window.open(mailtoLink, '_blank');
+            
+            // Mensagem de confirmação
+            alert(`Data ${formattedDate} selecionada! Um email será enviado para organizarmos nosso encontro em Aparecida.`);
+            
+            // Resetar seleção
+            selectedDate = null;
+            document.querySelectorAll('.calendar-day.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            const confirmBtn = document.getElementById('confirmDate');
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = 'Confirmar Data Escolhida';
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Foco no input de senha
+            passwordInput.focus();
+            
+            // Adicionar efeito de shake
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
         });
     </script>
 </body>
