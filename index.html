@@ -882,7 +882,11 @@ por ter aprendido contigo o que é amar de verdade.
         <!-- Footer -->
         <div class="footer">
             <p>Feito com <span class="heart-beat">❤</span> por alguém que te ama mais do que as palavras podem dizer</p>
-            <p class="obs">"O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha." - 1 Coríntios 13:4</p>
+            <p class="obs">"⁴ O amor é sofredor, é benigno; o amor não é invejoso; o amor não trata com leviandade, não se ensoberbece.
+            Não se porta com indecência, não busca os seus interesses, não se irrita, não suspeita mal;
+            Não folga com a injustiça, mas folga com a verdade;
+            Tudo sofre, tudo crê, tudo espera, tudo suporta </p>
+            <center>1 Coríntios 13:4-7</center>
         </div>
     </div>
 
@@ -989,7 +993,7 @@ por ter aprendido contigo o que é amar de verdade.
                     passwordInput.focus();
                 }, 500);
                 
-                alert('Senha incorreta. Tente novamente com carinho.');
+                alert('Esqueceu de por acento...');
             }
         }
         
@@ -1153,30 +1157,7 @@ por ter aprendido contigo o que é amar de verdade.
             }
         }
         
-        function selectDate(element) {
-            // Remover seleção anterior
-            document.querySelectorAll('.calendar-day.selected').forEach(el => {
-                el.classList.remove('selected');
-            });
-            
-            // Selecionar nova data
-            element.classList.add('selected');
-            selectedDate = element.dataset.date;
-            
-            // Habilitar botão de confirmação
-            confirmBtn.disabled = false;
-            
-            // Formatar data para exibição
-            const date = new Date(selectedDate);
-            const formattedDate = date.toLocaleDateString('pt-BR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            confirmBtn.innerHTML = `<i class="fas fa-calendar-check"></i> Confirmar: ${formattedDate}`;
-        }
+        
         
         function showCalendar() {
             // Criar calendário
@@ -1257,7 +1238,7 @@ por ter aprendido contigo o que é amar de verdade.
                 form.remove();
                 
                 // Mensagem de confirmação para ela
-                alert(`Obrigado! A data ${formattedDate} foi enviada para mim. Entrarei em contato em breve para combinarmos nosso encontro em Aparecida. 🙏`);
+                alert(`Obrigado! A data ${formattedDate} foi enviada para mim. Entrarei em contato em breve para combinarmos o horário na Aparecida!`);
                 
                 // Resetar seleção
                 resetCalendar();
@@ -1321,7 +1302,30 @@ por ter aprendido contigo o que é amar de verdade.
             const overlay = document.getElementById('fullscreenOverlay');
             overlay.style.display = 'none';
         }
-        
+        function selectDate(element) {
+            // Remover seleção anterior
+            document.querySelectorAll('.calendar-day.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Selecionar nova data
+            element.classList.add('selected');
+            selectedDate = element.dataset.date;
+            
+            // Habilitar botão de confirmação
+            confirmBtn.disabled = false;
+            
+            // Formatar data para exibição
+            const date = new Date(selectedDate);
+            const formattedDate = date.toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            confirmBtn.innerHTML = `<i class="fas fa-calendar-check"></i> Confirmar: ${formattedDate}`;
+        }
         // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
             // Foco no input de senha
